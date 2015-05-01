@@ -19,15 +19,16 @@ create table member
 
 select * from member
 where id = 'test'
+
 insert into member
-values('test1','1234','홍길동',20,'1','서울시','2015-04-17')
+values('test','1234','홍길동',20,'1','서울시','2015-04-17')
 
 update member
 set addr = '경기도'
-where id = 'test1'
+where id = 'test'
 
 delete member
-where id = 'test1'
+where id = 'test'
 
 drop table member
 
