@@ -15,16 +15,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class ListServlet
+ * Servlet implementation class ViewServlet
  */
-@WebServlet("/list")
-public class ListServlet extends HttpServlet {
+@WebServlet("/view")
+public class ViewServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ListServlet() {
+    public ViewServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,6 +34,16 @@ public class ListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		
+		out.print("<h1>회원 상세페이지</h1><hr>");
+		
+		String id = request.getParameter("id");
+		
+		// out.print(id);
+		
 		// 1. JDBC 드라이버 로드
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
@@ -53,46 +63,38 @@ public class ListServlet extends HttpServlet {
 		}
 		
 		// 3. SQL문 실행
-		PreparedStatement pstmt = null; // try안에 있는 것을 밖으로 빼줌
-		String sql = "select * from member";
-		
-		response.setContentType("text/html; charset=UTF-8");
-		PrintWriter out = response.getWriter();
+		PreparedStatement pstmt = null;
+		String sql = "select * from member where id=?";
 		
 		try {
 			
 			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setString(1, id);
 			ResultSet rs = pstmt.executeQuery(); // executeQuery는 select문을 사용할 때
 			
-			out.print("<h1>회원 리스트</h1><hr>");
-			
-			out.print("<table border=1>");
-			out.print("<tr>");
-			out.print("<th>아이디</th><th>이름</th><th>나이</th><th>성별</th><th>주소</th>");
-			out.print("</tr>");
-			while(rs.next() == true) { // 데이터값이 있으면 true, true는 생략 가능
-				
+			if(rs.next()) {
+				out.print("<table border=1>");
 				out.print("<tr>");
 				
-				out.print("<td><a href='view?id=" + rs.getString("id") + "'>" + rs.getString("id") + "</a></td>");
-				out.print("<td>" + rs.getString("name") + "</td>");
-				out.print("<td>" + rs.getInt("age") + "</td>");
-				out.print("<td>" + rs.getString("gender") + "</td>");
-				out.print("<td>" + rs.getString("addr") + "</td>");
+				out.print("<td>아이디</td>");
+				out.print("<td>"+ rs.getString("id") +"</td>");
 				out.print("</tr>");
 				
+				out.print("<tr>");
+				out.print("<td>이름</td>");
+				out.print("<td>"+ rs.getString("name") +"</td>");
+				out.print("</tr>");
+				
+				out.print("</table>");
+				
+				out.print("<a href='delete.jsp?id=" + rs.getString("id") + "'>삭제</a>");
 			}
-			out.print("</table>");
-			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-	
-		
 	}
-
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */

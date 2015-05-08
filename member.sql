@@ -21,7 +21,9 @@ select * from member
 where id = 'test'
 
 insert into member
-values('test','1234','홍길동',20,'1','서울시','2015-04-17')
+values('test11','1234','홍길동',20,'1','서울시','2015-04-17')
+
+alter table member 
 
 update member
 set addr = '경기도'

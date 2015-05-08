@@ -1,12 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
-<%@ page import = "java.sql.*" %> <!-- JDBC Å¬·¡½º´Â java.sql ÆÐÅ°Áö¿¡ Æ÷ÇÔµÇ¾î ÀÖ±â ¶§¹®¿¡ ¹Ýµå½Ã ÀÓÆ÷Æ®ÇØ¾ß ÇÔ -->
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page import = "java.sql.*" %> <!-- JDBC í´ëž˜ìŠ¤ëŠ” java.sql íŒ¨í‚¤ì§€ì— í¬í•¨ë˜ì–´ ìžˆê¸° ë•Œë¬¸ì— ë°˜ë“œì‹œ ìž„í¬íŠ¸í•´ì•¼ í•¨ -->
 <%@ page import = "java.io.*" %>
 
 <%
 
-	// 0. ¿äÃ» Ã³¸®
-	request.setCharacterEncoding("UTF-8"); // POST ¹æ½ÄÀÏ¶§ ÇÑ±ÛÃ³¸®
+	// 0. ìš”ì²­ ì²˜ë¦¬
+	request.setCharacterEncoding("UTF-8"); // POST ë°©ì‹ì¼ë•Œ í•œê¸€ì²˜ë¦¬
 	
 	String id = request.getParameter("id");
 	// out.print(id);
@@ -16,37 +16,40 @@
 	String gender = request.getParameter("gender");
 	String addr = request.getParameter("addr");
 	
-	// 1. JDBC µå¶óÀÌ¹ö ·Îµå
+	// 1. JDBC ë“œë¼ì´ë²„ ë¡œë“œ
 	Class.forName("oracle.jdbc.driver.OracleDriver");
 
-	// 2. µ¥ÀÌÅÍº£ÀÌ½º¿Í ¿¬°á
+	// 2. ë°ì´í„°ë² ì´ìŠ¤ì™€ ì—°ê²°
 	Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "jspuserc", "jsp1234");
 	
-	// 3. SQL¹® ½ÇÇà
-/* 	1) Statement °´Ã¼ ÀÌ¿ë - ÇØÅ·´çÇÏ±â ¶§¹®¿¡ »ç¿ë ¾ÈÇÔ!!!
- 	String sql = "insert into member values('" + id + "','" + pass + "','È«±æµ¿',20,'1','¼­¿ï½Ã','2015-04-17')";
+	// 3. SQLë¬¸ ì‹¤í–‰
+/* 	1) Statement ê°ì²´ ì´ìš© - í•´í‚¹ë‹¹í•˜ê¸° ë•Œë¬¸ì— ì‚¬ìš© ì•ˆí•¨!!!
+ 	String sql = "insert into member values('" + id + "','" + pass + "','í™ê¸¸ë™',20,'1','ì„œìš¸ì‹œ','2015-04-17')";
 	Statement stmt = con.createStatement();
 	int result = stmt.executeUpdate(sql);
 	
 	out.print(result); */
 	
-//  2) PreparedStatement °´Ã¼ ÀÌ¿ë
+//  2) PreparedStatement ê°ì²´ ì´ìš©
     String sql = "insert into member values(?, ?, ?, ?, ?, ?, default)";
 	PreparedStatement pstmt = con.prepareStatement(sql);
 	
-	// ¹ÙÀÎµù - ?ºÎºÐ Ã¤¿ö³ÖÀ½
-	pstmt.setString(1, id);  // ¹®ÀÚ¿­ÀÌ±â¶§¹®¿¡ setString »ç¿ë
+	// ë°”ì¸ë”© - ?ë¶€ë¶„ ì±„ì›Œë„£ìŒ
+	pstmt.setString(1, id);  // ë¬¸ìžì—´ì´ê¸°ë•Œë¬¸ì— setString ì‚¬ìš©
 	pstmt.setString(2, pass);
 	pstmt.setString(3, name);
-	pstmt.setInt(4, Integer.parseInt(age)); // Çüº¯È¯ 
+	pstmt.setInt(4, Integer.parseInt(age)); // í˜•ë³€í™˜ 
 	pstmt.setString(5, gender);
 	pstmt.setString(6, addr);
 	
 	int result = pstmt.executeUpdate();
 	
-	out.print(result);
+	if(result == 1)
+		response.sendRedirect("list");
 	
-	// 4. µ¥ÀÌÅÍº£ÀÌ½º¿Í ¿¬°á ²÷À½
+	// out.print(result);
+	
+	// 4. ë°ì´í„°ë² ì´ìŠ¤ì™€ ì—°ê²° ëŠìŒ
 	// stmt.close();
 	pstmt.close();
 	con.close();

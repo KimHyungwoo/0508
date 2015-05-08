@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -7,30 +7,30 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h1> È¸¿ø°¡ÀÔ </h1>
+<h1> íšŒì›ê°€ìž… </h1>
 <hr>
 
 <form action="registerProc.jsp">
-	<label for="id"> ¾ÆÀÌµð : </label>
+	<label for="id"> ì•„ì´ë”” : </label>
 	<input type="text" name="id" id="id"><br>
 	
-	<label for="pwd"> ºñ¹Ð¹øÈ£ : </label>
+	<label for="pwd"> ë¹„ë°€ë²ˆí˜¸ : </label>
 	<input type="password" name="pwd" id="pwd"><br>
 	
-	<label for="name"> ÀÌ¸§ : </label>
+	<label for="name"> ì´ë¦„ : </label>
 	<input type="text" name="name" id="name"><br>
 	
-	<label for="gender"> ¼ºº° : </label>
-	<input type="radio" name="gender" id="gender" value="m">³²ÀÚ
-	<input type="radio" name="gender" id="gender" value="f">¿©ÀÚ<br>
+	<label for="gender"> ì„±ë³„ : </label>
+	<input type="radio" name="gender" id="gender" value="m">ë‚¨ìž
+	<input type="radio" name="gender" id="gender" value="f">ì—¬ìž<br>
 	
-	<label for="age"> ³ªÀÌ : </label>
+	<label for="age"> ë‚˜ì´ : </label>
 	<input type="text" name="age" id="age"><br>
 		
-	<label for="addr"> ÁÖ¼Ò : </label>
+	<label for="addr"> ì£¼ì†Œ : </label>
 	<input type="text" name="addr" id="addr"><br>
 	
-	<input type="submit" value="°¡ÀÔ">
+	<input type="submit" value="ê°€ìž…">
 </form>
 
 </body>
